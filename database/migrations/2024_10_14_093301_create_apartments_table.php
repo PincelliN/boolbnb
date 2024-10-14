@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('bathroom');
             $table->unsignedSmallInteger('sqm')->default(10);
             $table->string('address');
-            $table->point('coordinate_long_lat');
+            $table->POINT('coordinate_long_lat');
             $table->string('img_path')->nullable();
             $table->string('img_name')->nullable();
             $table->boolean('is_visible');
