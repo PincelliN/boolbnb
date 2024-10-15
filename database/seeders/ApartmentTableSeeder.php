@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Apartment;
 use App\Functions\Helper;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ApartmentTableSeeder extends Seeder
@@ -20,7 +21,7 @@ class ApartmentTableSeeder extends Seeder
             $new_apartment = new Apartment();
             $new_apartment->title = $apartment['title'];
             $new_apartment->slug = Helper::generateSlug($new_apartment->title, Apartment::class);
-            $new_apartment->user_id = rand(2, 8);
+            $new_apartment->user_id = User::whereNotIn('id', [1, 9, 10])->inRandomOrder()->pluck('id')->first();;
             $new_apartment->description = $apartment['description'];
             $new_apartment->room = rand(1, 6);
             $new_apartment->bed = $new_apartment->room * 2;
