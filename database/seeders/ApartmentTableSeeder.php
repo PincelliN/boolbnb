@@ -27,18 +27,7 @@ class ApartmentTableSeeder extends Seeder
             $new_apartment->bathroom = rand(1, 3);
             $new_apartment->sqm = (($new_apartment->room * 20) + ($new_apartment->bathroom * 10));
             $new_apartment->address = $apartment['address'];
-
-            $encoded_address = urlencode($new_apartment->address);
-            $data_coordinate = file_get_contents('https://api.tomtom.com/search/2/geocode/' . $encoded_address . '.json?key=PmDZl7vx3YsaUvAjiu8WRKIDvd4SGoNG');
-            $coordinate_long_lat = json_decode($data_coordinate);
-
-            if (!empty($coordinate_long_lat->results[0])) {
-                $lon = $coordinate_long_lat->results[0]->position->lon;
-                $lat = $coordinate_long_lat->results[0]->position->lat;
-                // Imposta coordinate_long_lat usando ST_PointFromText
-                $new_apartment->coordinate_long_lat = DB::raw("ST_PointFromText('POINT($lon $lat)')");
-            }
-
+            $new_apartment->coordinate_long_lat = Helper::generateCoordinate($new_apartment->address);
             $new_apartment->img_path;
             $new_apartment->img_name;
             $new_apartment->is_visible = true;
