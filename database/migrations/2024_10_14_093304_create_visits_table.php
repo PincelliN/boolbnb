@@ -18,7 +18,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('apartments')
                 ->cascadeOnDelete();
-            $table->bigInteger('ip_address');
+            $table->string('ip_address');
             $table->timestamps();
         });
     }
